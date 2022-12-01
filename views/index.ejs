@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Note application</title>
+</head>
+
+<body>
+    <h1 class="main-title text-neutral-100">Note Taking Application</h1>
+    <div class="main-container flex">
+        <div class="new-note-container sub-container">
+            <form action="/new-note" method="POST" class="new-note-container">
+                <div class="grid">
+                    <h2 class="sub-title text-neutral-100">New Note</h2>
+                    <label for="newNote" class="hidden">New Note</label>
+                    <textarea name="newNote" id="newNote" rows="4"></textarea>
+                </div>
+                <button class="btn save-btn bg-primary-500 text-neutral-100" type="submit">Save</button>
+            </form>
+        </div>
+
+        <div class="notes-container sub-container grid">
+            <h2 class="sub-title text-neutral-100">My Notes</h2>
+            <% if (notes.length > 0) { notes.forEach(note => { %>
+            <div class="grid">
+                <form action="/update-note/<%= note.id %>" method="POST" id="update-form">
+                    <textarea name="<%= note.id %>" id="<%= note.id %>" rows="4"><%= note.content %></textarea>
+                    <button type="submit" class="btn update-btn bg-primary-700 text-neutral-100">Update</button>
+                </form>
+
+                <form action="/delete-note/<%= note.id %>" method="POST" class="delete-form">
+                    <input type="hidden" value="<%= note.id %>" name="<%= note.id %>">
+                    <button type="submit" class="btn delete-btn bg-primary-900 text-neutral-100">Delete</button>
+                </form>
+            </div>
+            <% })} else { %>
+            <h2 class="sub-title text-neutral-100">No Notes</h2>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>
